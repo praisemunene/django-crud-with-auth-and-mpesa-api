@@ -1,0 +1,12 @@
+{% extends 'master.html' %}
+{% block content %}
+    <h1 class="text-info text-center">Add product</h1>
+    <form style="background-color: #f1f1f1;padding: 40px;border-radius: 10px;" class="row mx-auto col-10 col-md-8 col-lg-6 d-flex flex-column" action="{% url 'addproducts' %}" method="post">
+        {% csrf_token %}
+        <input class="form-control mb-4" required name="p-name" placeholder="Product name" type="text"><br><br>
+        <input class="form-control mb-4" required type="text" name="p-qtty" placeholder="Product quantity"><br><br>
+        <input class="form-control mb-4" required type="text" name="p-price" placeholder="Product price"><br><br>
+        <input class="form-control mb-4" required type="text" name="p-desc" placeholder="Product description"><br><br>
+        <input type="submit" value="save" class="btn btn-outline-info">
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'master.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_filters %}
+{% block content %}
+	<h1 class="text-info text-center">Login here</h1>
+    <form class="row mx-auto col-10 col-md-8 col-lg-6 d-flex flex-column" style="background-color: #f1f1f1;border-radius: 8px;" method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Fill all inputs</legend>
+        {{ form|crispy }}
+    </fieldset>
+    <div class="form-group">
+        <input type="submit" value="Login" class="btn btn-info">
+    </div>
+    </form>
+{% endblock %}
