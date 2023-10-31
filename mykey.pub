@@ -1,1 +1,56 @@
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEycyCEGoHeG7oz0he7fNoAOQUvGt+cWr4QVtOBPV2Hu praisemunene87@gmail.com
+
+
+
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" value="Login">
+</form>
+
+
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('login/', views.custom_login, name='login'),
+    # Other URL patterns
+]
+
+
+
+
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+
+def custom_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            # Redirect to a success page or home page
+            return redirect('home')
+        else:
+            # Return an error message or render the login page with errors
+            return render(request, 'login.html', {'error': 'Invalid login credentials'})
+    return render(request, 'login.html')
+
+
+
+//logout
+
+from django.contrib.auth import logout
+
+def custom_logout(request):
+    logout(request)
+    return redirect('login')
