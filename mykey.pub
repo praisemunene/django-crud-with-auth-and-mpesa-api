@@ -54,3 +54,51 @@ from django.contrib.auth import logout
 def custom_logout(request):
     logout(request)
     return redirect('login')
+
+
+
+
+
+//register
+
+
+<form method="post" action="{% url 'register' %}">
+    {% csrf_token %}
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" value="Register">
+</form>
+
+
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('register/', views.register, name='register'),
+    # Other URL patterns
+]
+
+
+
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
+def register(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        # Create a new user
+        user = User.objects.create_user(username=email, email=email, password=password)
+
+        # You can log the user in immediately after registration if needed
+        # login(request, user)
+
+        # Redirect to a success page or home page
+        return redirect('home')
+    return render(request, 'register.html')
